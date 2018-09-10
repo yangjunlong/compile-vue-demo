@@ -6,7 +6,7 @@
 -->
 
 <template>
-	<div>test<el-button @click="handleClick">默认按钮</el-button></div>
+	<div><el-button @click="handleClick">默认按钮</el-button></div>
 </template>
 
 <script>
