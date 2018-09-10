@@ -14,7 +14,6 @@
 
 <script>
   import Test from './test.vue';
-  console.log(Test);
   export default {
     name:'hello',
     components: {
@@ -31,6 +30,7 @@
     }
   }
 </script>
+
 <style scoped>
   h1 {
     color: red;
