@@ -5,27 +5,17 @@
  * @version $Id$
  */
 
-console.log(fis);
-
 // 排除构建
-fis.set('project.ignore', [
-  'output/**',
-  'node_modules/**',
-  '.git/**',
-  '.svn/**',
+fis.get('project.ignore').push(
+  'webpack.config.js',
+  'entry.webpack.html',
   'dist/**'
-]);
-
-// 压缩js
-fis.match('*.js', {
-    // fis-optimizer-uglify-js 插件进行压缩，已内置
-    optimizer: fis.plugin('uglify-js')
-});
+);
 
 fis.match('::package', {
-    postpackager: fis.plugin('loader', {
-        allInOne: true
-    })
+  postpackager: fis.plugin('loader', {
+    allInOne: true
+  })
 });
 
 // 构建vue文件
@@ -68,4 +58,9 @@ fis.hook('commonjs', {
         'page': 'src/page'
     },
     extList: ['.js', '.jsx', '.es']
+});
+
+fis.match('/src/**.js', {
+  useSameNameRequire: true,
+  isMod: true
 });
