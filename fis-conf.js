@@ -5,6 +5,8 @@
  * @version $Id$
  */
 
+console.log(fis);
+
 // 排除构建
 fis.set('project.ignore', [
   'output/**',
@@ -18,6 +20,12 @@ fis.set('project.ignore', [
 fis.match('*.js', {
     // fis-optimizer-uglify-js 插件进行压缩，已内置
     optimizer: fis.plugin('uglify-js')
+});
+
+fis.match('::package', {
+    postpackager: fis.plugin('loader', {
+        allInOne: true
+    })
 });
 
 // 构建vue文件
@@ -52,6 +60,12 @@ fis.match('*.vue', {
 });
 
 
-fis.match('{/static/js/mod.js,fis-conf.js}', {
-    isMod: false
+// 添加commonjs支持 (需要先安装fis3-hook-commonjs)
+fis.hook('commonjs', {
+    baseUrl: './',
+    paths: {
+        'component': 'src/component',
+        'page': 'src/page'
+    },
+    extList: ['.js', '.jsx', '.es']
 });

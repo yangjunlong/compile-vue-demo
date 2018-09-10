@@ -16,6 +16,7 @@
     "fis-parser-babel-6.x": "^6.24.1",
     "fis3": "^3.4.39",
     "fis3-parser-vue-component": "^5.5.1",
+    "fis3-postpackager-loader": "^2.1.11",
     "vue-loader": "^15.4.1",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0"
