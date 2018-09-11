@@ -5,8 +5,8 @@
   <title>compile-vue-demo</title>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.6/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/element-ui@2.4.6/lib/index.js"></script>
 
   <script src="./mod.js"></script>
 </head>
@@ -16,7 +16,7 @@
   </div>
 
   <script>
-    require('src/hello.vue', function(hello) {
+    require.async('src/hello.vue', function(hello) {
       var vm = new Vue({
         el:'#app',
         data: {

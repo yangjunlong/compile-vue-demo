@@ -10,13 +10,11 @@
 </template>
 
 <script>
-  import test from './test.js';
-
   export default {
   	name: 'test',
   	methods: {
   	  handleClick() {
-  	  	alert(test());
+  	  	alert('test11');
   	  }
   	}
   }
