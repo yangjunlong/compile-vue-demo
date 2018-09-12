@@ -12,6 +12,7 @@
 
 /dist
 /output
+/rel
 
 # misc
 .DS_Store

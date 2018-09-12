@@ -17,6 +17,7 @@
     "fis3": "^3.4.39",
     "fis3-parser-vue-component": "^5.5.1",
     "fis3-postpackager-loader": "^2.1.11",
+    "rollup-plugin-vue": "^4.3.2",
     "vue-loader": "^15.4.1",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0"
