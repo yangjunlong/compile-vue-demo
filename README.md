@@ -57,16 +57,37 @@ npm rub build
 
 在这个过程中会涉及到如何编译.vue单文件组件，以及动态/异步渲染vue单文件组件，本文主要记录编译vue单文件组件的几种方法：
 
-在开始之前我们提前创建了一个项目：[compile-vue-demo](https://github.com/yangjunlong/compile-vue-demo)，方便您的调试和查看，该项目集成了webpack和fis3两种编译方式。
+在开始之前我们提前创建了一个项目：[compile-vue-demo](https://github.com/yangjunlong/compile-vue-demo)，方便您的调试和查看，该项目集成了下面几种编译方式。
 
 ### rollup
 > Rollup 是一个 JavaScript 模块打包器，可以将小块代码编译成大块复杂的代码，例如 library 或应用程序。Rollup 对代码模块使用新的标准化格式，这些标准都包含在 JavaScript 的 ES6 版本中，而不是以前的特殊解决方案，如 CommonJS 和 AMD。ES6 模块可以使你自由、无缝地使用你最喜爱的 library 中那些最有用独立函数，而你的项目不必携带其他未使用的代码。ES6 模块最终还是要由浏览器原生实现，但当前 Rollup 可以使你提前体验。
 
+配置文件
+```javascript
+// rollup.config.js
+import VuePlugin from 'rollup-plugin-vue'
+
+export default {
+  entry: 'src/main.vue',
+  format: 'iife',
+  dest: 'rel/bundle.js',
+  output: {
+    name: 'main',
+  },
+  plugins: [VuePlugin(/* VuePluginOptions */)],
+}
+```
+项目里的`entry.rollup.html`文件为rollup编译的入口文件，通过运行下面的命令编译：
+```
+rollup -c --watch
+```
+
 
 
 ### webpack
-项目里的`entry.webpack.html`文件为webpack编译方式的入口文件，通过运行下面的命令来编译
-```shell
+
+项目里的`entry.webpack.html`文件为webpack编译方式的入口文件，通过运行下面的命令来编译:
+```
 webpack
 ```
 

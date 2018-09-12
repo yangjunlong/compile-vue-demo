@@ -5,7 +5,7 @@ export default {
   format: 'iife',
   dest: 'rel/bundle.js',
   output: {
-  	name: 'main',
+    name: 'main',
   },
   plugins: [VuePlugin(/* VuePluginOptions */)],
 }
