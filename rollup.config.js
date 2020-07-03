@@ -1,10 +1,10 @@
 import VuePlugin from 'rollup-plugin-vue'
 
 export default {
-  entry: 'src/main.vue',
-  format: 'iife',
-  dest: 'rel/bundle.js',
+  input: 'src/main.vue',
   output: {
+  	file: 'rel/bundle.js',
+  	format: 'iife',
     name: 'main',
   },
   plugins: [VuePlugin(/* VuePluginOptions */)],

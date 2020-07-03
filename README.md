@@ -82,8 +82,6 @@ export default {
 rollup -c --watch
 ```
 
-
-
 ### webpack
 
 项目里的`entry.webpack.html`文件为webpack编译方式的入口文件，通过运行下面的命令来编译:
