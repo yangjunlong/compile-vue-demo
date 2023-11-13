@@ -7,33 +7,21 @@
 
 <template>
   <div>
-  	<h1>{{ name }}</h1>
-  	<el-button @click="handleClick">默认按钮</el-button>
+    <h1>{{ name }}</h1>
+    <el-button @click="handleClick">默认按钮</el-button>
   </div>
 </template>
 
 <script>
-  export default {
-  	name: 'main',
-  	data() {
-  	  return {
-  	  	name: 'main'
-  	  };
-  	},
-  	methods: {
-  	  handleClick(e) {
-  	  	console.log(e);
-  	  	alert(this.name);
-  	  }
-  	}
-  }
+ export default { name: 'main', data() { return { name: 'main' }; }, methods: { handleClick(e)
+{ console.log(e); alert(this.name); } } }
 </script>
 
-<style lang="css" scoped>
-  h1{
-  	color: red;
-  	.test {
-  	  color: green;
-  	}
+<style lang="scss" scoped>
+h1 {
+  color: red;
+  .test {
+    color: green;
   }
+}
 </style>

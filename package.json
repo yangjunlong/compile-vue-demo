@@ -1,9 +1,12 @@
 {
   "name": "compile-vue-demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "compile vue",
+  "type": "module",
   "main": "index.js",
   "scripts": {
+    "build:webpack": "webpack --mode=production --node-env=production",
+    "build:rollup": "rollup -c --environment NODE_ENV:production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,9 +20,15 @@
     "fis3": "^3.4.39",
     "fis3-parser-vue-component": "^5.5.1",
     "fis3-postpackager-loader": "^2.1.11",
-    "rollup-plugin-vue": "^4.3.2",
-    "vue-loader": "^15.4.1",
-    "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0"
+    "vue": "^3.3.8"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.3.8",
+    "rollup": "^4.4.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "sass": "^1.69.5",
+    "vue-loader": "^17.3.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }

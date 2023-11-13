@@ -1,23 +1,29 @@
 /**
  * webpack.config.js
  * 
- * @author  Yang,junlong at 2018-09-10 16:20:52 build.
+ * @author  sobird<i@sobird.me> at 2018-09-10 16:20:52 build.
  * @version $Id$
  */
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { default as VueLoaderPlugin } from 'vue-loader/dist/plugin.js';
 
-const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-module.exports = {
+
+console.log('VueLoaderPlugin1', VueLoaderPlugin);
+
+export default {
   entry: './src/hello.vue',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './dist'),
+    path: resolve(__dirname, './dist'),
     library: 'hello',
     //libraryTarget: 'umd'
   },
   mode: 'development',
-  devtool: 'none',
+  // devtool: 'none',
   module: {
     rules: [
       {
@@ -35,6 +41,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin.default()
   ]
 }
