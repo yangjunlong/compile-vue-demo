@@ -1,7 +1,7 @@
 /**
  * fis-conf.js
  * 
- * @author  Yang,junlong at 2018-09-10 16:48:32 build.
+ * @author  sobird<i@sobird.me> at 2018-09-10 16:48:32 build.
  * @version $Id$
  */
 
@@ -52,12 +52,12 @@ fis.match('*.vue', {
 
 // 添加commonjs支持 (需要先安装fis3-hook-commonjs)
 fis.hook('commonjs', {
-    baseUrl: './',
-    paths: {
-        'component': 'src/component',
-        'page': 'src/page'
-    },
-    extList: ['.js', '.jsx', '.es']
+  baseUrl: './',
+  paths: {
+    'component': 'src/component',
+    'page': 'src/page'
+  },
+  extList: ['.js', '.jsx', '.es']
 });
 
 fis.match('/src/**.js', {

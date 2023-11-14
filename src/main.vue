@@ -29,7 +29,8 @@ export default {
 <style lang="scss" scoped>
 h1 {
   color: red;
-
+  display: flex;
+  flex: 1;
   .test {
     color: green;
   }
