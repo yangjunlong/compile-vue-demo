@@ -13,13 +13,23 @@
 </template>
 
 <script>
- export default { name: 'main', data() { return { name: 'main' }; }, methods: { handleClick(e)
-{ console.log(e); alert(this.name); } } }
+export default {
+  data() {
+    return { name: 'main' };
+  },
+  methods: {
+    handleClick(e) {
+      console.log(e);
+      alert(this.name);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 h1 {
   color: red;
+
   .test {
     color: green;
   }

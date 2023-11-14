@@ -13,22 +13,22 @@
 </template>
 
 <script>
-  import Test from './test.vue';
-  export default {
-    name:'hello',
-    components: {
-      Test
-    },
-    data:function() {
-      return  {
-        text:'hello'
-      }
-    },
+import Test from './test.vue';
+export default {
+  name:'hello',
+  components: {
+    Test
+  },
+  data:function() {
+    return  {
+      text:'hello'
+    };
+  },
 
-    created() {
-      //
-    }
+  created() {
+    //
   }
+};
 </script>
 
 <style scoped>

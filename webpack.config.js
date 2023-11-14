@@ -13,7 +13,7 @@ import HtmlPlugin from 'html-webpack-plugin';
 import VueLoaderPlugin from 'vue-loader/dist/plugin.js';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-import pkg from './package.json' assert { type: "json" };
+import pkg from './package.json' assert { type: 'json' };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -114,4 +114,4 @@ export default (env) => {
   }
 
   return config;
-}
+};
