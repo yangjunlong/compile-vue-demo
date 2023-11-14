@@ -11,14 +11,18 @@ import webpack from 'webpack';
 import HtmlPlugin from 'html-webpack-plugin';
 // commonjs
 import VueLoaderPlugin from 'vue-loader/dist/plugin.js';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
 import pkg from './package.json' assert { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const isProduction = process.env.NODE_ENV === 'production';
+const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
 export default (env) => {
   const config = {
+    devtool: isProduction ? false : 'inline-source-map',
     entry: {
       app: [
         './src/main.ts'
@@ -50,8 +54,6 @@ export default (env) => {
         'Access-Control-Allow-Origin': '*',
       },
     },
-    mode: 'development',
-    // devtool: 'none',
     module: {
       rules: [
         {
@@ -59,8 +61,12 @@ export default (env) => {
           loader: 'vue-loader'
         },
         {
-          test: /\.css$/,
-          loader: 'css-loader'
+          test: /\.s[ac]ss$/i,
+          use: [stylesHandler, 'css-loader', 'postcss-loader', 'sass-loader'],
+        },
+        {
+          test: /\.css$/i,
+          use: [stylesHandler, 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.js$/,
@@ -88,6 +94,23 @@ export default (env) => {
       }),
       new VueLoaderPlugin.default()
     ]
+  };
+
+  if (isProduction) {
+    config.plugins.push(new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css',
+      ignoreOrder: true,
+    }));
+    // config.plugins.push(new webpack.SourceMapDevToolPlugin({
+    //   test: /\.(tsx|jsx|js)$/,
+    //   filename: '[file].map',
+    //   publicPath: '/',
+    // }));
+  } else {
+    config.plugins.push(new webpack.ProgressPlugin({
+      activeModules: true,
+    }));
   }
 
   return config;
