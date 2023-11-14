@@ -10,8 +10,8 @@
 # ocean的nodejs环境使用起来太痛苦了，先在本地build
 #/build
 
-/dist
-/output
+dist
+output
 /rel
 
 # misc

@@ -2,45 +2,89 @@
  * webpack.config.js
  * 
  * @author  sobird<i@sobird.me> at 2018-09-10 16:20:52 build.
- * @version $Id$
  */
+
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { default as VueLoaderPlugin } from 'vue-loader/dist/plugin.js';
+
+// webpack plugin
+import HtmlPlugin from 'html-webpack-plugin';
+// commonjs
+import VueLoaderPlugin from 'vue-loader/dist/plugin.js';
+import pkg from './package.json' assert { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const isProduction = process.env.NODE_ENV === 'production';
 
-
-console.log('VueLoaderPlugin1', VueLoaderPlugin);
-
-export default {
-  entry: './src/hello.vue',
-  output: {
-    filename: 'bundle.js',
-    path: resolve(__dirname, './dist'),
-    library: 'hello',
-    //libraryTarget: 'umd'
-  },
-  mode: 'development',
-  // devtool: 'none',
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
+export default (env) => {
+  const config = {
+    entry: {
+      app: [
+        './src/main.js'
+      ]
+    },
+    output: {
+      filename: '[name].[contenthash].js',
+      path: resolve(__dirname, './dist'),
+      clean: true,
+      // library: 'hello',
+      //libraryTarget: 'umd'
+    },
+    resolve: {
+      extensions: ['.vue', '.ts', '.js'],
+      alias: {
+        '@': resolve(__dirname, 'src'),
       },
-      {
-        test: /\.css$/,
-        loader: 'css-loader'
+    },
+    devServer: {
+      // open: true,
+      host: '0.0.0.0',
+      port: 3000,
+      hot: true, // 开启HMR功能
+      historyApiFallback: true,
+      static: {
+        directory: resolve(__dirname, 'public')
       },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader'
-      }
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    },
+    mode: 'development',
+    // devtool: 'none',
+    module: {
+      rules: [
+        {
+          test: /\.vue$/,
+          loader: 'vue-loader'
+        },
+        {
+          test: /\.css$/,
+          loader: 'css-loader'
+        },
+        {
+          test: /\.js$/,
+          loader: 'babel-loader'
+        }
+      ]
+    },
+    plugins: [
+      new HtmlPlugin({
+        template: resolve('public/index.html'),
+        filename: 'index.html',
+        cache: false,
+        minify: {
+          collapseWhitespace: isProduction,
+          removeComments: isProduction,
+          minifyJS: isProduction,
+          minifyCSS: isProduction,
+        },
+        inject: true,
+        title: pkg.description,
+      }),
+      new VueLoaderPlugin.default()
     ]
-  },
-  plugins: [
-    new VueLoaderPlugin.default()
-  ]
+  }
+
+  return config;
 }

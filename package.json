@@ -1,10 +1,11 @@
 {
   "name": "compile-vue-demo",
   "version": "1.0.0",
-  "description": "compile vue",
+  "description": "编译Vue单文件组件",
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "webpack serve --node-env=development",
     "build:webpack": "webpack --mode=production --node-env=production",
     "build:rollup": "rollup -c --environment NODE_ENV:production",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,11 +25,13 @@
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.3.8",
+    "html-webpack-plugin": "^5.5.3",
     "rollup": "^4.4.0",
     "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.69.5",
     "vue-loader": "^17.3.1",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
