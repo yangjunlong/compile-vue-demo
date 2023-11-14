@@ -6,7 +6,7 @@
 
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-
+import webpack from 'webpack';
 // webpack plugin
 import HtmlPlugin from 'html-webpack-plugin';
 // commonjs
@@ -21,7 +21,7 @@ export default (env) => {
   const config = {
     entry: {
       app: [
-        './src/main.js'
+        './src/main.ts'
       ]
     },
     output: {
@@ -32,7 +32,7 @@ export default (env) => {
       //libraryTarget: 'umd'
     },
     resolve: {
-      extensions: ['.vue', '.ts', '.js'],
+      extensions: ['.ts', '.vue', '.js'],
       alias: {
         '@': resolve(__dirname, 'src'),
       },
@@ -81,6 +81,10 @@ export default (env) => {
         },
         inject: true,
         title: pkg.description,
+      }),
+      new webpack.DefinePlugin({
+        __VUE_OPTIONS_API__: true,
+        __VUE_PROD_DEVTOOLS__: false,
       }),
       new VueLoaderPlugin.default()
     ]

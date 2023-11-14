@@ -23,12 +23,24 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build:Webpack 📦
+    - name: Cache Dependencies
+      id: cache-dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          **/node_modules
+        key: ${{ runner.os }}-mtm-${{ hashFiles('**/package.json') }}
+    
+    - name: Install Dependencies 🔧
+      if: steps.cache-dependencies.outputs.cache-hit != 'true'
       run: |
         yarn
+
+    - name: Build:Webpack 📦
+      run: |
         yarn build:webpack
 
-    - name: Deploy 🚀
+    - name: Deploy Github Pages 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
