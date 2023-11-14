@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: Build And Deploy Vue App
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     strategy:
@@ -40,9 +40,12 @@ jobs:
       run: |
         yarn build:webpack
 
+    - name: Build:Rollup 📦
+      run: |
+        yarn build:rollup
+
     - name: Deploy Github Pages 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
         folder: dist
