@@ -30,7 +30,7 @@ export default {
   This could be e.g. documentation for the component.
 </custom1>
 ```
-为此Vue的官方提供了`vue-loader`，它会解析文件，提取每个语言块，如有必要会通过其它 loader 处理，最后将他们组装成一个 ES Module，它的默认导出是一个 Vue.js 组件选项的对象。
+为此Vue的官方为`webpack`提供了`vue-loader`，它会解析`.vue`文件，提取每个语言块，如有必要会通过其它 loader 处理，最后将他们组装成一个 ES Module，它的默认导出是一个 `Vue.js` 组件选项的对象。
 
 `vue-loader` 支持使用非默认语言，比如 CSS 预处理器，预编译的 HTML 模版语言，通过设置语言块的 lang 属性。例如，你可以像下面这样使用 Sass 语法编写样式：
 
@@ -42,14 +42,18 @@ export default {
 详情见[https://vue-loader.vuejs.org/zh/](https://vue-loader.vuejs.org/zh/)
 
 ### 开始
-大部分情况下我们开发Vue项目是通过vue-cli这个脚手架快速生成一个项目骨架而开始的
-```
+大部分情况下我们开发Vue项目是通过vue脚手架快速生成一个项目骨架而开始的
+
+```sh
 vue init webpack my-vue-project
 ```
+
 然后我们在这个项目中编写.vue单文件组件，通过：
+
 ```
-npm rub build 
+npm run build 
 ```
+
 构建整个项目，将产出的文件发布上线，事实上在整个项目构建过程中我们并不知道.vue文件到底发生了什么。当然如果只是单纯通过这种方式来开发一个Vue的单页项目，其实也并不需要了解太多细节，我们只需要按照给定的项目规范编写业务代码即可，但这种傻瓜式的开发配置，有时候并不能满足多变的需求。
 
 ### 想法
@@ -57,144 +61,28 @@ npm rub build
 
 在这个过程中会涉及到如何编译.vue单文件组件，以及动态/异步渲染vue单文件组件，本文主要记录编译vue单文件组件的几种方法：
 
-在开始之前我们提前创建了一个项目：[compile-vue-demo](https://github.com/yangjunlong/compile-vue-demo)，方便您的调试和查看，该项目集成了下面几种编译方式。
-
 ### rollup
 > Rollup 是一个 JavaScript 模块打包器，可以将小块代码编译成大块复杂的代码，例如 library 或应用程序。Rollup 对代码模块使用新的标准化格式，这些标准都包含在 JavaScript 的 ES6 版本中，而不是以前的特殊解决方案，如 CommonJS 和 AMD。ES6 模块可以使你自由、无缝地使用你最喜爱的 library 中那些最有用独立函数，而你的项目不必携带其他未使用的代码。ES6 模块最终还是要由浏览器原生实现，但当前 Rollup 可以使你提前体验。
 
-配置文件
-```javascript
-// rollup.config.js
-import VuePlugin from 'rollup-plugin-vue'
 
-export default {
-  entry: 'src/main.vue',
-  format: 'iife',
-  dest: 'rel/bundle.js',
-  output: {
-    name: 'main',
-  },
-  plugins: [VuePlugin(/* VuePluginOptions */)],
-}
+项目里的`public/rollup.html`文件为rollup编译的入口文件，通过运行下面的命令进行编译：
 ```
-项目里的`entry.rollup.html`文件为rollup编译的入口文件，通过运行下面的命令编译：
-```
-rollup -c --watch
+yarn build:rollup
 ```
 
 ### webpack
 
-项目里的`entry.webpack.html`文件为webpack编译方式的入口文件，通过运行下面的命令来编译:
-```
-webpack
-```
-
-```javascript
-// webpack.config.js
-const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-
-module.exports = {
-  entry: './src/hello.vue',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, './dist'),
-    library: 'hello',
-    //libraryTarget: 'umd'
-  },
-  mode: 'development',
-  devtool: 'none',
-  module: {
-    rules: [
-      // 解析.vue文件
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      // 它会应用到普通的 `.css` 文件
-      // 以及 `.vue` 文件中的 `<style>` 块
-      {
-        test: /\.css$/,
-        loader: 'css-loader'
-      },
-      // 它会应用到普通的 `.js` 文件
-      // 以及 `.vue` 文件中的 `<script>` 块
-      {
-        test: /\.js$/,
-        loader: 'babel-loader'
-      }
-    ]
-  },
-  plugins: [
-    new VueLoaderPlugin()
-  ]
-}
-```
-
-上面的配置就是将`./src/hello.vue`文件编译打包成 `./dist/bundle.js`文件，为了能够在打包之后拿到`hello.vue`组件对象，上面配置了`output.library = 'hello'`
-
-在`entry.webpack.html`文件中则通过下面方式实例化了一个Vue App
-
-```javascript
-var vm = new Vue({
-  el:'#app',
-  data: {
-    hello: 'hello'
-  },
-  created() {},
-  components:{
-    hello: hello.default
-  }
-});
-```
-
-### FIS3
-项目里的`entry.fis.html`文件为fis编译方式的入口文件，通过运行下面命令来查看效果：
+项目里的`public/index.html`文件为webpack编译方式的入口文件，通过运行下面的命令来编译:
 
 ```
-fis3 server start
-fis3 release -wcL
+yarn build:webpack
 ```
-本地访问：http://127.0.0.1:8080/entry.fis.html
 
-在fis中已经有大神帮我们实现了.vue文件的编译插件：[fis3-parser-vue-component](https://github.com/ccqgithub/fis3-parser-vue-component) 具体配置如下
+### gulp
 
-```javascript
-// fis-conf.js
-fis.match('*.vue', {
-  isMod: true,
-  rExt: '.js',
-  useSameNameRequire: true,
-  parser: fis.plugin('vue-component', {
-    runtimeOnly: true, // vue@2.x 有润timeOnly模式，为ture时，template会在构建时转为render方法， 这里开启后paths中无需指定
-    // styleNameJoin
-    styleNameJoin: '', // 样式文件命名连接符 `component-xx-a.css`
-    extractCSS: false, // 是否将css生成新的文件, 如果为false, 则会内联到js中
-    // css scoped
-    cssScopedIdPrefix: '_v-', // hash前缀：_v-23j232jj
-    cssScopedHashType: 'sum', // hash生成模式，num：使用`hash-sum`, md5: 使用`fis.util.md5`
-    cssScopedHashLength: 8 // hash 长度，cssScopedHashType为md5时有效
-  }),
-  optimizer: [/*fis.plugin('uglify-js'),*/ function(content, file, settings) {
-    //console.log(file);
-    return content;
-  }]
-}).match('{*.less, *.vue:less}', {
-  parser: fis.plugin('less'),
-  postprocessor: fis.plugin('autoprefixer'),
-  rExt: '.css'
-}).match('{src/**.js, *.vue:js}', {
-  parser: fis.plugin('babel-6.x', {
-    presets: ['es2015', 'stage-3'],
-    plugins: ['add-module-exports']
-  }),
-  rExt: '.js'
-});
-```
+
+### parcel
 
 ### 平台化？
 上面的两种编译.vue的方法，也只是我们借助工具经过简单配置来实现的，尽管实现了.vue单文件组件的编译，但还是不够友好，或者说我们还是不能方便的使用，他们仍然是要通过编译文件的形式来解析代码，是否可以以一种服务的形式存在直接解析/编译从前端编辑器POST过来的.vue单文件组件代码？我们后面文章将继续介绍~~
 
-### 参考
-* [灵活使用vue单文件组件之--最少配置打包.vue组件](https://segmentfault.com/a/1190000012410802)
-* [fis3-vuejs](https://github.com/Martian1/fis3-vuejs)

@@ -7,8 +7,12 @@ const count = ref(0);
   <button @click="count++">Count is: <span>{{ count }}</span></button>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 button {
   font-weight: bold;
+  flex: 1;
+  span {
+    color: red;
+  }
 }
 </style>

@@ -29,11 +29,12 @@ export default (env) => {
       ]
     },
     output: {
-      filename: '[name].[contenthash].js',
       path: resolve(__dirname, './dist'),
       clean: true,
-      // library: 'hello',
-      //libraryTarget: 'umd'
+      filename: '[name].[contenthash].js',
+      chunkFilename: '[name].[contenthash].chunk.js',
+      assetModuleFilename: 'assets/[contenthash][ext][query]',
+      hashDigestLength: 8,
     },
     resolve: {
       extensions: ['.ts', '.vue', '.js'],
