@@ -5418,12 +5418,12 @@
 
   };
 
-  script.__scopeId = "data-v-89bcfd0e";
+  script.__scopeId = "data-v-4ddcd962";
 
   /**
    * entry
    * 
-   * @author  sobird<i@sobird.me> at 2018-09-10 16:19:18 build.
+   * sobird<i@sobird.me> at 2018-09-10 16:19:18 build.
    */
 
 
